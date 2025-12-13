@@ -1,0 +1,15 @@
+name = "cf-ai-incident-assistant"
+main = "src/index.js"
+compatibility_date = "2025-01-01"
+
+[ai]
+binding = "AI"
+
+[durable_objects]
+bindings = [
+  { name = "CHAT", class_name = "ChatSession" }
+]
+
+[[migrations]]
+tag = "v1"
+new_classes = ["ChatSession"]
