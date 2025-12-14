@@ -3,8 +3,6 @@
 An AI-powered incident analysis assistant built on **Cloudflare Workers**, **Workers AI**, and **Durable Objects**.  
 This project simulates how engineering teams triage incidents during outages, regressions, or post-deployment issues.
 
-> Built as part of a Cloudflare Software Engineering Internship application.
-
 ---
 
 ## 🚀 What This Project Does
