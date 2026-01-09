@@ -1,10 +1,10 @@
-Cloudflare Incident Triage Assistant
+# Cloudflare Incident Triage Assistant
 
 A lightweight incident triage tool built with Cloudflare Workers, Durable Objects, and Workers AI.
 
 It models how engineering teams handle early-stage incident investigation in a structured, repeatable way. The goal is not automated resolution, but helping engineers clarify what’s happening, what to check next, and what questions still need answering.
 
-Overview
+## Overview
 
 This tool supports the initial triage phase of an incident.
 
@@ -29,7 +29,7 @@ The assistant is designed to support investigation, not replace monitoring, aler
 
 Multiple incidents can be investigated in parallel, each maintaining its own short-term context.
 
-Stateful incident conversations using Durable Objects
+## Architecture
 
 The application is split into clear components.
 
@@ -41,7 +41,7 @@ The application is split into clear components.
 
 The frontend is intentionally minimal. The focus is the workflow and state management.
 
-Architecture
+### Worker (API Layer)
 
 - Exposes a single `/chat` endpoint
 - Handles request validation and CORS
@@ -53,16 +53,16 @@ Architecture
 - Preserves context across multiple turns
 - Ensures isolation between concurrent investigations
 
-The frontend is deliberately minimal. The emphasis is on interaction flow and state management rather than visual complexity.
+### Workers AI
 
 - Receives the current message along with recent context
 - Produces a structured, conversational response focused on:
-  - Understanding the issue
-  - Identifying likely causes
-  - Suggesting investigation steps
-  - Asking relevant follow-up questions
+  - understanding the issue
+  - identifying likely causes
+  - suggesting investigation steps
+  - asking relevant follow-up questions
 
-Handles request validation and CORS
+## Why Cloudflare
 
 This project uses Cloudflare to explore how small internal tools can be built with minimal operational overhead.
 
@@ -86,10 +86,10 @@ This setup is well-suited for focused internal tools that need to be responsive,
 
 This project intentionally avoids:
 
-- Automated remediation
-- Deep system integrations
-- Long-term incident storage
-- Complex UI frameworks
+- automated remediation
+- deep system integrations
+- long-term incident storage
+- complex UI frameworks
 
 These choices are deliberate. The aim is to demonstrate clear system design, state management, and judgement.
 
