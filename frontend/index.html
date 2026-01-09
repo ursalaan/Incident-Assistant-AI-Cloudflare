@@ -1,75 +1,62 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title>AI Incident Assistant</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        max-width: 800px;
-        margin: 40px auto;
-      }
-      textarea {
-        width: 100%;
-        padding: 10px;
-      }
-      button {
-        padding: 10px 16px;
-        margin-top: 10px;
-      }
-      pre {
-        background: #f4f4f4;
-        padding: 12px;
-        white-space: pre-wrap;
-      }
-      input {
-        padding: 6px;
-        margin-bottom: 10px;
-        width: 200px;
-      }
-    </style>
-  </head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Incident Triage Assistant</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
 
-  <body>
-    <h2>AI Incident Assistant</h2>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <h2>Incidents</h2>
 
-    <label>Session name (memory key):</label><br />
-    <input id="session" value="demo" /><br />
+      <button id="newIncident" class="secondary">
+        Create new incident
+      </button>
 
-    <textarea id="input" rows="4" placeholder="Describe an incident or problem..."></textarea><br />
-    <button onclick="send()">Send</button>
+      <div class="saved">
+        <h3>Saved chats</h3>
+        <ul id="savedChats"></ul>
+      </div>
+    </aside>
 
-    <h3>Response</h3>
-    <pre id="output"></pre>
+    <main class="chat">
+      <div class="chat-header">
+        <button id="resetIncident" class="secondary">
+          Clear chat
+        </button>
+      </div>
 
-    <script>
-      async function send() {
-        const session = document.getElementById("session").value;
-        const input = document.getElementById("input").value;
-        const output = document.getElementById("output");
-      
-        output.textContent = "Thinking...";
-      
-        try {
-          const res = await fetch(
-            "https://cf-ai-incident-assistant.tyq45b8qyz.workers.dev/chat?session=" + encodeURIComponent(session),
-            {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ message: input })
-            }
-          );
-      
-          if (!res.ok) {
-            throw new Error("Request failed: " + res.status);
-          }
-      
-          const data = await res.json();
-          output.textContent = data.reply || "No reply received.";
-        } catch (err) {
-          output.textContent = "Error: " + err.message;
-        }
-      }
-      </script>      
-  </body>
+      <div id="messages" class="messages"></div>
+
+      <div class="composer">
+        <textarea
+          id="message"
+          placeholder="Describe the incident or respond to the analysis…"
+        ></textarea>
+        <button id="send">Send</button>
+      </div>
+    </main>
+  </div>
+
+  <div id="incidentModal" class="modal hidden">
+    <div class="modal-content">
+      <h3>Create new incident</h3>
+
+      <input
+        id="incidentNameInput"
+        type="text"
+        placeholder="Incident title (e.g. API outage)"
+      />
+
+      <div class="modal-actions">
+        <button id="cancelIncident" class="secondary">Cancel</button>
+        <button id="confirmIncident">Create</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
 </html>
